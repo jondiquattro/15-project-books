@@ -2,7 +2,7 @@
   "name": "book_list_app",
   "version": "1.0.0",
   "description": "Application that will allow users to upload and review books",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "start": "node server.js",
     "watch": "nodemon server.js"
