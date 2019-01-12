@@ -4,6 +4,8 @@
 
 
 module.exports = (req,res,next) => {//req.params contains whatever variable is entered into the request ie categories
-    console.log('called from routfinder')
+    let routeName = req.params.route;
+    req.route = require(`../routes/${routeName}.js`)
+    
   next();
 }
