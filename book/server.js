@@ -37,7 +37,7 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
 // API Routes
-app.get('/', getBooks);
+app.get('/', getBooks);//getall
 app.post('/searches', createSearch);
 app.get('/searches/new', newSearch);
 app.get('/books/:id', getBook);
