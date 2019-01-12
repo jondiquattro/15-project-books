@@ -1,46 +1,56 @@
-![CF](http://i.imgur.com/7v5ASc8.png) LAB
+![CF](http://i.imgur.com/7v5ASc8.png) LAB 15
 =================================================
 
-## Project Name
+## Lab 15 Project Books
 
-### Author: Student/Group Name
-
+### Author: Jon Diquattro and Ryan Gallaway
 ### Links and Resources
-* [repo](http://xyz.com)
-* [travis](http://xyz.com)
-* [back-end](http://xyz.com) (when applicable)
-* [front-end](http://xyz.com) (when applicable)
 
-#### Documentation
-* [swagger](http://xyz.com) (API assignments only)
-* [jsdoc](http://xyz.com) (All assignments)
+[![Build Status](https://travis-ci.com/jondiquattro/15-project-books.svg?branch=master)](https://travis-ci.com/jondiquattro/15-project-books)
+
+* [repo](https://github.com/jondiquattro/15-project-books/pull/3)
+* [travis](https://travis-ci.com/jondiquattro/15-project-books)
+* [back-end](https://lab-15-project-book-jd-rg.herokuapp.com)
+* [front-end](http://localhost:8080)
+
+<!-- #### Documentation ///////////////////////////on its way
+* [swagger](http://xyz.com) (API assignments only) 
+* [jsdoc](http://xyz.com) (All assignments) -->
 
 ### Modules
-#### `modulename.js`
-##### Exported Values and Methods
+#### `models/books.js`, `books-schema.js`, `api/books.js`, `404.js`, `error.js`, `routes/v1.js`
+#### Exported Values and Methods:
+#### router, books, Books
 
-###### `foo(thing) -> string`
-Usage Notes or examples
+### Overview
+Refactors the Code Fellows 301 Book App
 
-###### `bar(array) -> array`
-Usage Notes or examples
+#### Requirements
+* The UI and App Functionality must remain identical
+* Modularize the server code
+  * server.js should be a requireable module
+  * index.js should be written to:
+    * require mongo and connect to your books database
+    * require your server.js and start
+  * routes.js should be written to handle routing
+  * Middleware moved to appropriate files
+  * Model behavior (SQL) moved out into a model file
+* Convert the models from postgres to mongo
+  * Keep the pg version in addition to the mongo version
+  * Must be able to change between them based on config
+    * (Model Interface)
+* Deploy to Heroku
 
 ### Setup
 #### `.env` requirements
-* `PORT` - Port Number
-* `MONGODB_URI` - URL to the running mongo instance/db
+* `PORT` - defined in ENV
+* `MONGODB_URI` - mongodb://heroku_61kfgjf6:50tgahono1pdv66tgvunf66cau@ds251849.mlab.com:51849/heroku_61kfgjf6)
 
 #### Running the app
 * `npm start`
-* Endpoint: `/foo/bar/`
-  * Returns a JSON object with abc in it.
-* Endpoint: `/bing/zing/`
-  * Returns a JSON object with xyz in it.
   
 #### Tests
-* How do you run tests?
-* What assertions were made?
-* What assertions need to be / should be made?
-
-#### UML
-Link to an image of the UML for your application and response to events
+* `npm i` to install dependencies
+* run eslint
+* nodemon (to start server)
+* npm test 
