@@ -3,9 +3,13 @@
 // Application Dependencies
 require('dotenv').config();
 const express = require('express');
-const pg = require('pg');
 const superagent = require('superagent');
-const methodOverride = require('method-override');
+
+
+
+
+// const pg = require('pg'); moved to books-schema
+// const methodOverride = require('method-override');   garbage
 
 // Application Setup
 const app = express();
@@ -20,14 +24,14 @@ client.on('error', err => console.error(err));
 app.use(express.urlencoded({extended:true}));
 app.use(express.static('public'));
 
-app.use(methodOverride((request, response) => {
-  if (request.body && typeof request.body === 'object' && '_method' in request.body) {
-    // look in urlencoded POST bodies and delete it
-    let method = request.body._method;
-    delete request.body._method;
-    return method;
-  }
-}))
+// app.use(methodOverride((request, response) => {
+//   if (request.body && typeof request.body === 'object' && '_method' in request.body) {
+//     // look in urlencoded POST bodies and delete it
+//     let method = request.body._method;
+//     delete request.body._method;
+//     return method;
+//   }
+// }))
 
 // Set the view engine for server-side templating
 app.set('view engine', 'ejs');

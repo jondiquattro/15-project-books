@@ -28,6 +28,7 @@ function getTeams(request,response,next) {
     .catch( next );
 }
 
+
 function getTeam(request,response,next) {
   teams.get(request.params.id)
     .then( result => response.status(200).json(result[0]) )

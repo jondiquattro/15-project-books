@@ -1,5 +1,7 @@
 'use strict';
 
+
+//this is the schema that will hold the sql
 const mongoose = require('mongoose');
 require('mongoose-schema-jsonschema')(mongoose);
 

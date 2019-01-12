@@ -1,14 +1,12 @@
 'use strict';
 
-class DataModel {
+class SQLModel {
     constructor(schema) {
         this.schema = schema;
     }
-//find()
-// .save()
-//.findByIdAndDelete 
-// Are all mongo functions
+
     get(_id) {
+        //if _id is true qObj = _id else {}
         let queryObject = _id ? {_id} : {};
         return this.schema.find(queryObject);
     }
@@ -27,4 +25,4 @@ class DataModel {
         this.schema.findByIdAndDelete(_id);
     }
 }
-module.exports = DataModel;
+module.exports = SQLModel;

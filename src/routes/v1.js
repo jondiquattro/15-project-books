@@ -37,7 +37,7 @@ router.get('api/v1/:model/:lat/:long') //req.params would contain all the
 
  //watch 0954 video
 function handleGetAll(req,res,next) {
-  req.model.get()
+  req.model.get()//model is the class constructor ie team, product, category etc etv
     .then( data => {
       const output = {
         count: data.length,
