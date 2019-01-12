@@ -62,7 +62,7 @@ function Book(info) {
 }
 
 function getBooks(request, response) {
-  let SQL = 'SELECT * FROM books;';
+  let SQL = 'SELECT * FROM books;';//needs removed
 
   return client.query(SQL)
     .then(results => {

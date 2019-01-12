@@ -69,7 +69,8 @@ function handleGetOne (req,res,next) {
  * @param {*} next
  */
 function handlePost (req,res,next) {
-    console.log('in handle post');
+    console.log(req.body);
+
   req.model.post(req.body)
     .then( result => res.status(200).json(result) )
     .catch( next );
