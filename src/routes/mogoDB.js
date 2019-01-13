@@ -12,11 +12,17 @@ router.param('model', modelFinder);
 // ROUTESS
 
 router.get('/api/v1/:model', handleGetAll);
-router.post('/api/v1/:model', handlePost);
+// router.post('/api/v1/:model', handlePost);    ///needs work
+
+// router.get('/:model', handleGetAll);
+// router.post('/:model', handlePost);
 
 // ///new paths////  -diquattro
 router.get('/searches/new', newSearch);
-router.post('/searches', createSearch);
+router.post('/api/v1/searches', createSearch);
+// router.post('/:model', handlePost);
+
+
 //////////////////////////////////////
 
 
@@ -86,7 +92,7 @@ function handleGetOne (req,res,next) {
  */
 function handlePost (req,res,next) {
     console.log('called from handle post');
-    console.log(req.body)
+    // console.log(req.body)
 
   req.model.post(req.body)
     .then( result => res.status(200).json(result) )
@@ -133,20 +139,13 @@ function newSearch(req, res, next) {
 }
 
 function createSearch(req, res, next) {
-  console.log('//////////////////////////////////////')
+  console.log('create search called')
   let url = 'https://www.googleapis.com/books/v1/volumes?q=';
 
-  console.log('create search model',req.model);
   if (req.body.search[1] === 'title') { url += `+intitle:${req.body.search[0]}`; }
   if (req.body.search[1] === 'author') { url += `+inauthor:${req.body.search[0]}`; }
-  console.log(url);
 
   superagent.get(url)
-  // .then(apires => apires.body.items.map(idx => {
-  //   new Book(idx.volumeInfo);
-  //   books.post(req.body)
-
-  // }) )
      .then(apires => apires.body.items.map(bookResult => new Book(bookResult.volumeInfo)))
     .then(results => res.render('pages/searches/show',{results: results}),next)
 }
@@ -168,5 +167,8 @@ function Book(info) {
   this.id = info.industryIdentifiers ? `${info.industryIdentifiers[0].identifier}` : '';
 }
 
+createShelf(shelf){
+  
+}
 
 module.exports = router;

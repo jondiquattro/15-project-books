@@ -14,7 +14,8 @@
           <li data-book-id="<%= book.isbn %>">
             <%- include('../books/detail', {book: book}) %>
             <button class="select-button">Select This Book</button>
-            <form class="hide-me" action="/books" method="post">
+            <form class="hide-me" action="/api/v1/books" method="post">
+              
               <input type="text" name="title" value="<%= book.title %>" required>
               <input type="text" name="author" value="<%= book.author %>" required>
               <input type="text" name="isbn" value="<%= book.isbn %>">

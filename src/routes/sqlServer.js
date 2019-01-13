@@ -33,13 +33,14 @@ router.use(methodOverride((req, res, next) => {
 // router.set('view engine', 'ejs');
 
 // API Routes
-router.get('/api/v1', getBooks);
-router.post('api/v1/searches', createSearch);
-router.get('api/v1/searches/new', newSearch);
-router.get('api/v1/books/:id', getBook);
-router.post('api/v1/books', createBook);
-router.put('api/v1/books/:id', updateBook);
-router.delete('api/v1/books/:id', deleteBook);
+router.get('/api/v1/', getBooks);
+router.post('/api/v1/searches', createSearch);
+router.get('/api/v1/searches/new', newSearch);
+router.get('/api/v1/books/:id', getBook);
+
+router.post('/api/v1/books', createBook);
+router.put('/api/v1/books/:id', updateBook);
+router.delete('/api/v1/books/:id', deleteBook);
 
 router.get('*', (req, res) => res.status(404).send('This route does not exist'));
 
