@@ -41,7 +41,8 @@ router.get('api/v1/:model/:lat/:long') //req.params would contain all the
 
 function renderHome(req,res,next){
   console.log('called from render');
-  res.render('pages/index')
+  res.render('../../views/pages/index')
+  // const x = require('../../views/pages/index.ejs')
 }
 
 /**

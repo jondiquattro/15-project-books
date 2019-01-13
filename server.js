@@ -3,17 +3,13 @@
 // Application Dependencies
 require('dotenv').config();
 const express = require('express');
+const pg = require('pg');
 const superagent = require('superagent');
-
-
-
-
-// const pg = require('pg'); moved to books-schema
-// const methodOverride = require('method-override');   garbage
+const methodOverride = require('method-override');
 
 // Application Setup
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 300;
 
 // Database Setup
 const client = new pg.Client(process.env.DATABASE_URL);
@@ -24,20 +20,20 @@ client.on('error', err => console.error(err));
 app.use(express.urlencoded({extended:true}));
 app.use(express.static('public'));
 
-// app.use(methodOverride((request, response) => {
-//   if (request.body && typeof request.body === 'object' && '_method' in request.body) {
-//     // look in urlencoded POST bodies and delete it
-//     let method = request.body._method;
-//     delete request.body._method;
-//     return method;
-//   }
-// }))
+app.use(methodOverride((request, response) => {
+  if (request.body && typeof request.body === 'object' && '_method' in request.body) {
+    // look in urlencoded POST bodies and delete it
+    let method = request.body._method;
+    delete request.body._method;
+    return method;
+  }
+}))
 
 // Set the view engine for server-side templating
 app.set('view engine', 'ejs');
 
 // API Routes
-app.get('/', getBooks);//getall
+app.get('/', getBooks);
 app.post('/searches', createSearch);
 app.get('/searches/new', newSearch);
 app.get('/books/:id', getBook);
@@ -62,7 +58,7 @@ function Book(info) {
 }
 
 function getBooks(request, response) {
-  let SQL = 'SELECT * FROM books;';//needs removed
+  let SQL = 'SELECT * FROM books;';
 
   return client.query(SQL)
     .then(results => {
