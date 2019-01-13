@@ -5,7 +5,16 @@ require('dotenv').config();
 const express = require('express');
 const pg = require('pg');
 const superagent = require('superagent');
+<<<<<<< HEAD:server.js
 const methodOverride = require('method-override');
+=======
+
+
+
+
+const pg = require('pg'); //moved to books-schema
+const methodOverride = require('method-override');   //garbage
+>>>>>>> 825a1b2499e7be516faaaa223e7b4f72a867c907:server.js
 
 // Application Setup
 const app = express();
