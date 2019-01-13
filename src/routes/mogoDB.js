@@ -12,15 +12,11 @@ router.param('model', modelFinder);
 // ROUTESS
 
 router.get('/api/v1/:model', handleGetAll);
-// router.post('/api/v1/:model', handlePost);    ///needs work
-
-// router.get('/:model', handleGetAll);
-// router.post('/:model', handlePost);
 
 // ///new paths////  -diquattro
 router.get('/searches/new', newSearch);
 router.post('/api/v1/searches', createSearch);
-// router.post('/:model', handlePost);
+router.post('/api/v1/:model', handlePost);
 
 
 //////////////////////////////////////
@@ -90,15 +86,61 @@ function handleGetOne (req,res,next) {
  * @param {*} res
  * @param {*} next
  */
+//this is a post route so it will only run on post
 function handlePost (req,res,next) {
     console.log('called from handle post');
-    // console.log(req.body)
+    console.log(req.body.bookshelf);
+    // createBook(req.body)
+    req.body.bookshelf.post(req.body.bookshelf);
 
-  req.model.post(req.body)
+    req.model.post(req.body)//creates a book using book model
     .then( result => res.status(200).json(result) )
+    .then(res.render('pages/index'))//returns to home
     .catch( next );
 }
 
+
+
+function createShelf(shelf) {
+  let normalizedShelf = shelf.toLowerCase();
+
+  console.log('/////////////////  createShelf called')
+  // let SQL1 = `SELECT id from bookshelves where name=$1;`;
+  // let values1 = [normalizedShelf];
+
+//needs to take in bookshelf
+
+//post to mongo
+//////////////////////////////////////////
+  shelf.post(req.body)
+  
+///////////////////////////////////////////////
+  
+    .then(results => {
+      if(results.rowCount) {
+        return results.rows[0].id;
+      } else {
+        let INSERT = `INSERT INTO bookshelves(name) VALUES($1) RETURNING id;`;
+        let insertValues = [shelf];
+
+        return client.query(INSERT, insertValues)
+          .then(results => {
+            return results.rows[0].id;
+          })
+      }
+    })
+}
+
+function createBook(req, res, next) {
+  console.log('//////////////////////inside create book', req.bookshelf);
+  req.find(req.bookshelf);
+
+  createShelf(req)
+    .then(id => {
+      console.log('inside create book');
+    })
+
+}
 
 /**
  *
@@ -167,8 +209,6 @@ function Book(info) {
   this.id = info.industryIdentifiers ? `${info.industryIdentifiers[0].identifier}` : '';
 }
 
-createShelf(shelf){
-  
-}
+
 
 module.exports = router;

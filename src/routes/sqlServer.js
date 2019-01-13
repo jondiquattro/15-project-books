@@ -33,12 +33,12 @@ router.use(methodOverride((req, res, next) => {
 // router.set('view engine', 'ejs');
 
 // API Routes
-router.get('/api/v1/', getBooks);
-router.post('/api/v1/searches', createSearch);
-router.get('/api/v1/searches/new', newSearch);
+router.get('/api/v1/', getBooks);//x
+router.post('/api/v1/searches', createSearch);//x
+router.get('/api/v1/searches/new', newSearch);//x
 router.get('/api/v1/books/:id', getBook);
 
-router.post('/api/v1/books', createBook);
+router.post('/api/v1/books', createBook);//x
 router.put('/api/v1/books/:id', updateBook);
 router.delete('/api/v1/books/:id', deleteBook);
 
@@ -112,13 +112,15 @@ function getBookshelves() {
 function createShelf(shelf) {
   let normalizedShelf = shelf.toLowerCase();
   let SQL1 = `SELECT id from bookshelves where name=$1;`;
+
+  //finds shelf by name
   let values1 = [normalizedShelf];
 
   return client.query(SQL1, values1)
     .then(results => {
       if(results.rowCount) {
         return results.rows[0].id;
-      } else {
+      } else {//makes a book shelf
         let INSERT = `INSERT INTO bookshelves(name) VALUES($1) RETURNING id;`;
         let insertValues = [shelf];
 
@@ -130,7 +132,7 @@ function createShelf(shelf) {
     })
 }
 
-function createBook(req, res, next) {
+function createBook(req, res, next) {//makes a book in the books db
   createShelf(req.body.bookshelf)
     .then(id => {
       let {title, author, isbn, image_url, description} = req.body;
