@@ -2,16 +2,22 @@
 console.log('hooked up from mongo');
 
 const express = require('express');
+const superagent = require('superagent');
+
 const modelFinder = require('../middleware/model-finder.js');
 
 const router = express.Router();
 router.param('model', modelFinder);
 
 // ROUTESS
-///new path////  -diquattro
-router.post('/searches/new', newSearch);
+
 router.get('/api/v1/:model', handleGetAll);
 router.post('/api/v1/:model', handlePost);
+
+// ///new paths////  -diquattro
+router.get('/searches/new', newSearch);
+router.post('/searches', createSearch);
+//////////////////////////////////////
 
 
 router.get('/api/v1/:model/:id', handleGetOne);
@@ -125,5 +131,40 @@ function newSearch(req, res, next) {
   res.render('pages/searches/new');
   next;
 }
+
+function createSearch(req, res, next) {
+  console.log('//////////////////////////////////////')
+  let url = 'https://www.googleapis.com/books/v1/volumes?q=';
+
+  console.log(req.body);
+  if (req.body.search[1] === 'title') { url += `+intitle:${req.body.search[0]}`; }
+  if (req.body.search[1] === 'author') { url += `+inauthor:${req.body.search[0]}`; }
+  console.log(url);
+
+  superagent.get(url)
+  .then(apires => apires.body.items.map(idx => {
+    new Book(idx.volumeInfo);
+  }) )
+    // .then(apires => apires.body.items.map(bookResult => new Book(bookResult.volumeInfo)))
+    .then(results => res.render('pages/searches/show',{results: results}),next)
+}
+
+function newSearch(req, res, next) {
+  res.render('pages/searches/new');
+  next;
+}
+
+
+function Book(info) {
+  let placeholderImage = 'https://i.imgur.com/J5LVHEL.jpg';
+
+  this.title = info.title || 'No title available';
+  this.author = info.authors[0] || 'No authors available';
+  this.isbn = info.industryIdentifiers ? `ISBN_13 ${info.industryIdentifiers[0].identifier}` : 'No ISBN available';
+  this.image_url = info.imageLinks ? info.imageLinks.smallThumbnail : placeholderImage;
+  this.description = info.description || 'No description available';
+  this.id = info.industryIdentifiers ? `${info.industryIdentifiers[0].identifier}` : '';
+}
+
 
 module.exports = router;

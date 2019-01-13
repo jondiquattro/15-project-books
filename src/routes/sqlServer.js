@@ -7,9 +7,9 @@ const pg = require('pg');
 const superagent = require('superagent');
 const methodOverride = require('method-override');   //garbage
 
-const app = express.Router();
+const router = express.Router();
 
-const PORT = process.env.PORT || 3000;
+// const PORT = process.env.PORT || 3000;
 
 // Database Setup
 const client = new pg.Client(process.env.DATABASE_URL);
@@ -17,10 +17,10 @@ client.connect();
 client.on('error', err => console.error(err));
 
 // application Middleware
-app.use(express.urlencoded({extended:true}));
-app.use(express.static('public'));
+router.use(express.urlencoded({extended:true}));
+router.use(express.static('public'));
 
-app.use(methodOverride((req, res, next) => {
+router.use(methodOverride((req, res, next) => {
   if (req.body && typeof req.body === 'object' && '_method' in req.body) {
     // look in urlencoded POST bodies and delete it
     let method = req.body._method;
@@ -30,20 +30,20 @@ app.use(methodOverride((req, res, next) => {
 }))
 
 // Set the view engine for server-side templating
-// app.set('view engine', 'ejs');
+// router.set('view engine', 'ejs');
 
 // API Routes
-app.get('/api/v1', getBooks);
-app.post('api/v1/searches', createSearch);
-app.get('api/v1/searches/new', newSearch);
-app.get('api/v1/books/:id', getBook);
-app.post('api/v1/books', createBook);
-app.put('api/v1/books/:id', updateBook);
-app.delete('api/v1/books/:id', deleteBook);
+router.get('/api/v1', getBooks);
+router.post('api/v1/searches', createSearch);
+router.get('api/v1/searches/new', newSearch);
+router.get('api/v1/books/:id', getBook);
+router.post('api/v1/books', createBook);
+router.put('api/v1/books/:id', updateBook);
+router.delete('api/v1/books/:id', deleteBook);
 
-app.get('*', (req, res) => res.status(404).send('This route does not exist'));
+router.get('*', (req, res) => res.status(404).send('This route does not exist'));
 
-// app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
+// router.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
 
 // HELPER FUNCTIONS
 function Book(info) {
@@ -167,4 +167,4 @@ function handleError(error, res) {
   res.render('pages/error', {error: error});
 }
 
-module.exports = app;
+module.exports = router;
