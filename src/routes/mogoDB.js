@@ -136,16 +136,18 @@ function createSearch(req, res, next) {
   console.log('//////////////////////////////////////')
   let url = 'https://www.googleapis.com/books/v1/volumes?q=';
 
-  console.log(req.body);
+  console.log('create search model',req.model);
   if (req.body.search[1] === 'title') { url += `+intitle:${req.body.search[0]}`; }
   if (req.body.search[1] === 'author') { url += `+inauthor:${req.body.search[0]}`; }
   console.log(url);
 
   superagent.get(url)
-  .then(apires => apires.body.items.map(idx => {
-    new Book(idx.volumeInfo);
-  }) )
-    // .then(apires => apires.body.items.map(bookResult => new Book(bookResult.volumeInfo)))
+  // .then(apires => apires.body.items.map(idx => {
+  //   new Book(idx.volumeInfo);
+  //   books.post(req.body)
+
+  // }) )
+     .then(apires => apires.body.items.map(bookResult => new Book(bookResult.volumeInfo)))
     .then(results => res.render('pages/searches/show',{results: results}),next)
 }
 
