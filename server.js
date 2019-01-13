@@ -75,6 +75,9 @@ function getBooks(request, response) {
     .catch(err => handleError(err, response));
 }
 
+// function getBooksMongo(request, response)
+
+
 function createSearch(request, response) {
   let url = 'https://www.googleapis.com/books/v1/volumes?q=';
 
@@ -102,6 +105,7 @@ function getBook(request, response) {
         .catch(err => handleError(err, response));
     })
 }
+
 
 function getBookshelves() {
   // let SQL = 'SELECT DISTINCT bookshelf FROM books ORDER BY bookshelf;';
