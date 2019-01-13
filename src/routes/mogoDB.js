@@ -1,24 +1,25 @@
 'use strict';
-console.log('hooked up');
-const express = require('express');
-const router = express.Router();
+console.log('hooked up from mongo');
 
+const express = require('express');
+const modelFinder = require('../middleware/model-finder.js');
+
+const router = express.Router();
+router.param('model', modelFinder);
 
 // ROUTESS
-router.get('/', getBooks);
-router.get('/api/v1:model', handleGetAll);
-router.post('/api/v1:model', handlePost);
-router.get('/api/v1:model/api/v1:id', handleGetOne);
-router.put('/api/v1:model/api/v1:id', handlePut);
-router.delete('/api/v1:model/:id', handleDelete);
+
+router.get('/api/v1/:model', handleGetAll);
+router.post('/api/v1/:model', handlePost);
+router.get('/api/v1/:model/:id', handleGetOne);
+router.put('/api/v1/:model/:id', handlePut);
+router.delete('/api/v1/:model/:id', handleDelete);
 
 
 router.get('api/v1/:model/:lat/:long') //req.params would contain all the 
 // FUNCTIONS
 
-function getBooks(req,res,next){
-  console.log('called');
-}
+
 /**
  *
  *
@@ -29,13 +30,21 @@ function getBooks(req,res,next){
 
  //watch 0954 video
 function handleGetAll(req,res,next) {
-  console.log('handle get all')
+  //model is actually a class
+  console.log('from getall')
   req.model.get()//model is the class constructor ie team, product, category etc etv
     .then( data => {
+      console.log('data', data)
       const output = {
         count: data.length,
         results: data,
       };
+      console.log('count' ,count)
+      // if(results.rows.rowCount === 0) {
+      //   res.render('pages/searches/new');
+      // } else {
+      //   res.render('pages/index', {books: results.rows})
+      // }
       res.status(200).json(output);
     })
     .catch( next );

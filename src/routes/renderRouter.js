@@ -1,8 +1,5 @@
 'use strict';
 
-
-'use strict';
-
 // application Dependencies
 require('dotenv').config();
 const express = require('express');
@@ -36,13 +33,13 @@ app.use(methodOverride((req, res, next) => {
 // app.set('view engine', 'ejs');
 
 // API Routes
-app.get('/', getBooks);
-app.post('/searches', createSearch);
-app.get('/searches/new', newSearch);
-app.get('/books/:id', getBook);
-app.post('/books', createBook);
-app.put('/books/:id', updateBook);
-app.delete('/books/:id', deleteBook);
+app.get('/api/v1', getBooks);
+app.post('api/v1/searches', createSearch);
+app.get('api/v1/searches/new', newSearch);
+app.get('api/v1/books/:id', getBook);
+app.post('api/v1/books', createBook);
+app.put('api/v1/books/:id', updateBook);
+app.delete('api/v1/books/:id', deleteBook);
 
 app.get('*', (req, res) => res.status(404).send('This route does not exist'));
 

@@ -8,7 +8,7 @@ const morgan = require('morgan');
 // Esoteric Resources
 const errorHandler = require( './middleware/error.js');
 const notFound = require( './middleware/404.js' );
-const renderRoute = require('./routes/renderRouter');
+// const renderRoute = require('./routes/renderRouter');
 const apiRouter = require('./routes/mogoDB.js');
 
 // Prepare the express app
@@ -24,8 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
 // Routes
-// app.use(categoryRouter);
-app.use(renderRoute);
+// app.use(renderRoute);
 
 app.use(apiRouter);
 
