@@ -8,9 +8,12 @@ const router = express.Router();
 router.param('model', modelFinder);
 
 // ROUTESS
-
+///new path////  -diquattro
+router.post('/searches/new', newSearch);
 router.get('/api/v1/:model', handleGetAll);
 router.post('/api/v1/:model', handlePost);
+
+
 router.get('/api/v1/:model/:id', handleGetOne);
 router.put('/api/v1/:model/:id', handlePut);
 router.delete('/api/v1/:model/:id', handleDelete);
@@ -31,21 +34,24 @@ router.get('api/v1/:model/:lat/:long') //req.params would contain all the
  //watch 0954 video
 function handleGetAll(req,res,next) {
   //model is actually a class
-  console.log('from getall')
-  req.model.get()//model is the class constructor ie team, product, category etc etv
+  console.log('from handegetAll')
+  req.model.get()
     .then( data => {
-      console.log('data', data)
+      // console.log('data', data.length)
+
       const output = {
         count: data.length,
         results: data,
       };
-      console.log('count' ,count)
-      // if(results.rows.rowCount === 0) {
-      //   res.render('pages/searches/new');
-      // } else {
-      //   res.render('pages/index', {books: results.rows})
-      // }
+      if(output.count ===0){
+        res.render('pages/searches/new');
+      }
+      else{
+        res.render('pages/index', output.results )
+      }
+      
       res.status(200).json(output);
+    
     })
     .catch( next );
 }
@@ -112,5 +118,12 @@ function handleDelete (req,res,next) {
     .catch( next );
 }
 
+
+//////////////new function////////  diquattro
+function newSearch(req, res, next) {
+  console.log('called from newsaerch')
+  res.render('pages/searches/new');
+  next;
+}
 
 module.exports = router;
