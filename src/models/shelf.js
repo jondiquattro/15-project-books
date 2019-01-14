@@ -8,4 +8,4 @@ const DataModel = require('./model.js')
 class Shelf extends DataModel {}
 
 
-module.exports = new Books(shelfSchema);
+module.exports = new Shelf(shelfSchema);

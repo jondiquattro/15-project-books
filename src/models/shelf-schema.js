@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 require('mongoose-schema-jsonschema')(mongoose);
 
 const shelf = mongoose.Schema({
-  id: { type:String, required:true },
+  _id: { type:String, required:true },
   name: { type:String}
 });
 

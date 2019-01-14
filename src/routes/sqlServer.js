@@ -116,10 +116,8 @@ function createShelf(shelf) {
   //finds shelf by name
   let values1 = [normalizedShelf];
 
-  return client.query(SQL1, values1)
-    .then(results => {
-      if(results.rowCount) {
-        return results.rows[0].id;
+  return client.query(SQL1, values1)//check for shelf
+    .then(results => {if(results.rowCount) {return results.rows[0].id;
       } else {//makes a book shelf
         let INSERT = `INSERT INTO bookshelves(name) VALUES($1) RETURNING id;`;
         let insertValues = [shelf];

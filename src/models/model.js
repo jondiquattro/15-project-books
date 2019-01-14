@@ -4,10 +4,7 @@ class DataModel {
     constructor(schema) {
         this.schema = schema;
     }
-//find()
-// .save()
-//.findByIdAndDelete 
-// Are all mongo functions
+
     get(_id) {
         let queryObject = _id ? {_id} : {};
         return this.schema.find(queryObject);

@@ -5,7 +5,7 @@ const express = require('express');
 const superagent = require('superagent');
 
 const modelFinder = require('../middleware/model-finder.js');
-
+const shelf = require('../models/shelf.js');
 const router = express.Router();
 router.param('model', modelFinder);
 
@@ -16,7 +16,8 @@ router.get('/api/v1/:model', handleGetAll);
 // ///new paths////  -diquattro
 router.get('/searches/new', newSearch);
 router.post('/api/v1/searches', createSearch);
-router.post('/api/v1/:model', handlePost);
+router.post('/api/v1/books', createBook);
+// router.post('/api/v1/:model', handlePost);
 
 
 //////////////////////////////////////
@@ -73,7 +74,7 @@ function handleGetAll(req,res,next) {
  */
 function handleGetOne (req,res,next) {
   console.log('handle get one')
-
+  req.
   req.model.get(req.params.id)
     .then( result => res.status(200).json(result[0]) )
     .catch( next );
@@ -87,60 +88,53 @@ function handleGetOne (req,res,next) {
  * @param {*} next
  */
 //this is a post route so it will only run on post
-function handlePost (req,res,next) {
-    console.log('called from handle post');
-    console.log(req.body.bookshelf);
-    // createBook(req.body)
-    req.body.bookshelf.post(req.body.bookshelf);
 
-    req.model.post(req.body)//creates a book using book model
-    .then( result => res.status(200).json(result) )
-    .then(res.render('pages/index'))//returns to home
-    .catch( next );
-}
+function createBook(req,res,next){
+
+  //check for bookshelf
+  let search = req.body.bookshelf;
+    shelf.get({search})
+        .then( result => {if(result.length ===0){
+          console.log('adding shelf////////////////////');
+          
+          shelf.post({search})//object
+        }})
+        .then(
+          shelf.get({search})
+          .then(result=> console.log('results',result))
+        )
+
+res.render('pages/index')//to render should go after .then()
+};
+// function handlePost (req,res,next) {
+//     console.log('called from handle post');
+
+//     //set model = bookshelf
+//     // req.model = 'bookshelf';
+//     console.log(req.model);
+//     //check if shelf exists
+//     req.model.get(req.body.bookshelf)
+//     .then( result => {if(result.length ===0){
+//       //create shelf
+//       console.log('empty');
+//       req.model.get(req.model)
+//     }} ).then(
+//       result =>{
+//         console.log(result);
+//       }
+//     )
+
+//     console.log('req.model', req.body);
+//     req.model.post(req.body)  //how it was working
 
 
 
-function createShelf(shelf) {
-  let normalizedShelf = shelf.toLowerCase();
+//     req.model.post(req.body)//creates a book using book model
+//     .then( result => res.status(200).json(result) )
+//     .then(res.render('pages/index'))//returns to home
+//     .catch( next );
+// }
 
-  console.log('/////////////////  createShelf called')
-  // let SQL1 = `SELECT id from bookshelves where name=$1;`;
-  // let values1 = [normalizedShelf];
-
-//needs to take in bookshelf
-
-//post to mongo
-//////////////////////////////////////////
-  shelf.post(req.body)
-  
-///////////////////////////////////////////////
-  
-    .then(results => {
-      if(results.rowCount) {
-        return results.rows[0].id;
-      } else {
-        let INSERT = `INSERT INTO bookshelves(name) VALUES($1) RETURNING id;`;
-        let insertValues = [shelf];
-
-        return client.query(INSERT, insertValues)
-          .then(results => {
-            return results.rows[0].id;
-          })
-      }
-    })
-}
-
-function createBook(req, res, next) {
-  console.log('//////////////////////inside create book', req.bookshelf);
-  req.find(req.bookshelf);
-
-  createShelf(req)
-    .then(id => {
-      console.log('inside create book');
-    })
-
-}
 
 /**
  *
