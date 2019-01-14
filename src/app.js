@@ -8,12 +8,13 @@ const morgan = require('morgan');
 // Esoteric Resources
 const errorHandler = require( './middleware/error.js');
 const notFound = require( './middleware/404.js' );
-// const categoryRouter = require( './api/categories.js' );
-// const productRouter = require( './api/products.js' );
-const apiRouter = require('./routes/v1.js');
+// const renderRoute = require('./routes/sqlServer');
+const apiRouter = require('./routes/mogoDB.js');
 
 // Prepare the express app
 const app = express();
+
+app.set('view engine', 'ejs');
 
 // App Level MW
 app.use(cors());
@@ -21,10 +22,10 @@ app.use(morgan('dev'));
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
-
+app.use(express.static('public'));
 // Routes
-// app.use(categoryRouter);
-// app.use(productsRouter);
+// app.use(renderRoute);
+
 app.use(apiRouter);
 
 // Catchalls
