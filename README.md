@@ -14,9 +14,8 @@
 * [back-end](https://lab-15-ryan-jon.herokuapp.com/)
 * [front-end](http://localhost:8080)
 
-<!-- #### Documentation ///////////////////////////on its way
-* [swagger](http://xyz.com) (API assignments only) 
-* [jsdoc](http://xyz.com) (All assignments) -->
+#### Documentation ///////////////////////////on its way
+* [jsdoc](http://xyz.com) (All assignments)
 
 ### Modules
 #### `models/books.js`, `books-schema.js`, `api/books.js`, `404.js`, `error.js`, `routes/v1.js`

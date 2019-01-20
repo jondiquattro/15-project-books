@@ -1,12 +1,12 @@
 'use strict';
 
 const rootDir = process.cwd();
-const Categories = require(`${rootDir}/src/models/categories.js`);
+const Bookshelf = require(`${rootDir}/src/models/bookshelves.js`);
 
 describe('Categories Model', () => {
   it('can post() a new cateogory', () => {
     let obj = {name:'Towel', type: 'Paper'};
-    let categories = new Categories();
+    let categories = new Bookshelf();
     return categories.post(obj)
       .then(record => {
         Object.keys(obj).forEach(key =>{
@@ -18,7 +18,7 @@ describe('Categories Model', () => {
 
   it('can get() a category', () => {
     let obj = {name:'Towel', type: 'Paper'};
-    let categories = new Categories();
+    let categories = new Bookshelf();
     return categories.post(obj)
       .then(record => {
         return categories.get(record._id)
