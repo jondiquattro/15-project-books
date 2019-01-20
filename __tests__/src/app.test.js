@@ -30,22 +30,22 @@ describe('api server', () => {
 
   });
 
-  it('should respond properly on request to /api/v1/products', () => {
+  it('should respond properly on request to /api/v1/books', () => {
 
     return mockRequest
-      .get('/api/v1/products')
+      .get('/api/v1/books')
       .then(results => {
         expect(results.status).toBe(200);
       });
 
   });
 
-  it('should be able to post to /api/v1/categories', () => {
+  it('should be able to post to /api/v1/books', () => {
 
     let obj = {name:'paper products', type: 'paper'};
 
     return mockRequest
-      .post('/api/v1/categories')
+      .post('/api/v1/books')
       .send(obj)
       .then(results => {
         expect(results.status).toBe(200);
@@ -54,12 +54,12 @@ describe('api server', () => {
 
   });
 
-  it('should be able to post to /api/v1/products', ()  => {
+  it('should be able to post to /api/v1/books', ()  => {
 
     let obj = {name:'Towels', type:'paper',price:4};
 
     return mockRequest
-      .post('/api/v1/products')
+      .post('/api/v1/books')
       .send(obj)
       .then(results => {
         expect(results.status).toBe(200);
@@ -69,15 +69,15 @@ describe('api server', () => {
   });
 
 
-  it('following a post to products, should find a single record', () => {
+  it('following a post to books, should find a single record', () => {
 
     let obj = {name:'Towels', type:'paper',price:4};
 
     return mockRequest
-      .post('/api/v1/products')
+      .post('/api/v1/books')
       .send(obj)
       .then(results => {
-        return mockRequest.get(`/api/v1/products/${results.body._id}`)
+        return mockRequest.get(`/api/v1/books/${results.body._id}`)
           .then(list => {
             expect(list.status).toBe(200);
             expect(list.body.team).toEqual(obj.team);
