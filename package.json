@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "jsdoc": "jsdoc -c ./docs/jsdoc.config.json",
     "watch": "nodemon index.js",
     "test": "jest --verbose",
     "test-watch": "jest --watchAll --verbose"
