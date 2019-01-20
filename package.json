@@ -4,8 +4,10 @@
   "description": "Application that will allow users to upload and review books",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
-    "watch": "nodemon server.js"
+    "start": "node index.js",
+    "watch": "nodemon index.js",
+    "test": "jest --verbose",
+    "test-watch": "jest --watchAll --verbose"
   },
   "keywords": [],
   "author": "Code Fellows, LLC",
@@ -15,6 +17,7 @@
     "dotenv": "^6.2.0",
     "ejs": "^2.6.1",
     "express": "^4.16.2",
+    "jest": "^23.6.0",
     "method-override": "^3.0.0",
     "pg": "^7.3.0",
     "superagent": "^3.8.3",
