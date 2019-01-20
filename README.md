@@ -14,8 +14,8 @@
 * [back-end](https://lab-15-ryan-jon.herokuapp.com/)
 * [front-end](http://localhost:8080)
 
-#### Documentation ///////////////////////////on its way
-* [jsdoc](http://xyz.com) (All assignments)
+#### Documentation 
+* [jsdoc](https://github.com/jondiquattro/15-project-books/blob/master/docs/index.html) 
 
 ### Modules
 #### `models/books.js`, `books-schema.js`, `api/books.js`, `404.js`, `error.js`, `routes/v1.js`
@@ -47,7 +47,9 @@ Refactors the Code Fellows 301 Book App
 * `MONGODB_URI` - mongodb://heroku_61kfgjf6:50tgahono1pdv66tgvunf66cau@ds251849.mlab.com:51849/heroku_61kfgjf6)
 
 #### Running the app
-* `nodemon`
+* terminal 1: `nodemon`
+* terminal 2: start mongo DB
+* terminal 3: run tests etc
   
 #### Tests
 * `npm i` to install dependencies
