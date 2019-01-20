@@ -1,11 +1,33 @@
 'use strict';
 
-const booksSchema = require('./books-schema.js')
+const bookshelves =require('./bookshelves.js');
 
-const DataModel = require('./model.js') 
+const mongoose = require('mongoose');
+
+const books = mongoose.Schema({
+  title: { type:String, required:true },
+  author: { type:String, required:true },
+  isbn: { type:String, required:true },
+  image_url: { type:String},
+  description: { type:String },
+  bookshelf_id: { type:String},
+}, {toObject:{virtuals:true}, toJSON:{virtuals:true}});
+
+books.virtual('bookshelf', {
+    ref: 'bookshelves',
+    localField: 'bookshelf_id',
+    foreignField: '_id',
+    justOne: true,
+
+});
+books.pre('find', function(){
+  try{
+    this.populate('bookshelf');
+  }
+  catch(e){
+    console.error('Find Error', e);
+  }
+});
 
 
-class Books extends DataModel {}
-
-
-module.exports = new Books(booksSchema);
+module.exports = mongoose.model('books', books);
